@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Landing Page Services - Anugrah Syahban Pratama</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: linear-gradient(
+          135deg,
+          #0f0c29 0%,
+          #302b63 50%,
+          #24243e 100%
+        );
+        color: #fff;
+        overflow-x: hidden;
+      }
+
+      body.light-mode {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        color: #1a202c;
+      }
+
+      /* Glass morphism */
+      .glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      body.light-mode .glass {
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      /* Navbar scroll effect */
+      .navbar-scrolled {
+        background: rgba(15, 12, 41, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      body.light-mode .navbar-scrolled {
+        background: rgba(255, 255, 255, 0.95);
+      }
+
+      /* Gradient text */
+      .gradient-text {
+        background: linear-gradient(
+          90deg,
+          #667eea 0%,
+          #764ba2 50%,
+          #f093fb 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Button styles */
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        transition: left 0.3s ease;
+        z-index: -1;
+      }
+
+      .btn-primary:hover::before {
+        left: 0;
+      }
+
+      .btn-secondary {
+        background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-secondary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+        transition: left 0.3s ease;
+        z-index: -1;
+      }
+
+      .btn-secondary:hover::before {
+        left: 0;
+      }
+
+      /* Card hover effect */
+      .card-3d {
+        transition: all 0.3s ease;
+        transform-style: preserve-3d;
+      }
+
+      .card-3d:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Glow effects */
+      .glow-blue {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+        transition: all 0.3s ease;
+      }
+
+      .glow-blue:hover {
+        box-shadow: 0 0 30px rgba(102, 126, 234, 0.8);
+        transform: translateY(-2px);
+      }
+
+      .glow-pink {
+        box-shadow: 0 0 20px rgba(236, 72, 153, 0.6);
+        transition: all 0.3s ease;
+      }
+
+      .glow-pink:hover {
+        box-shadow: 0 0 30px rgba(236, 72, 153, 0.8);
+        transform: translateY(-2px);
+      }
+
+      /* Theme toggle */
+      .theme-toggle {
+        width: 60px;
+        height: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 30px;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .theme-toggle-slider {
+        width: 24px;
+        height: 24px;
+        background: #667eea;
+        border-radius: 50%;
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .theme-toggle.active .theme-toggle-slider {
+        transform: translateX(30px);
+        background: #fbbf24;
+      }
+
+      /* Mobile menu */
+      .mobile-menu {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+
+      /* Hamburger animation */
+      .hamburger-line {
+        width: 30px;
+        height: 3px;
+        background: currentColor;
+        margin: 5px 0;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger.active .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(8px, -8px);
+      }
+
+      /* Particle effect */
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+      }
+
+      /* Floating animation */
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .floating {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* Popular badge */
+      .popular-badge {
+        position: absolute;
+        top: -12px;
+        right: 20px;
+        background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+        padding: 6px 20px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+      }
+
+      /* Image container */
+      .demo-img {
+        overflow: hidden;
+        border-radius: 12px;
+        position: relative;
+      }
+
+      .demo-img img {
+        transition: transform 0.3s ease;
+      }
+
+      .demo-img:hover img {
+        transform: scale(1.1);
+      }
+
+      @media (max-width: 768px) {
+        .card-3d:hover {
+          transform: translateY(-5px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav
+      id="navbar"
+      class="fixed w-full top-0 z-50 transition-all duration-300"
+    >
+      <div class="container mx-auto px-4 sm:px-6">
+        <div class="flex items-center justify-between h-16 sm:h-20">
+          <!-- Logo -->
+          <a
+            href="index.html"
+            class="text-2xl sm:text-3xl font-bold gradient-text"
+            >Nugiii()</a
+          >
+
+          <!-- Desktop Menu -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a href="index.html" class="hover:text-purple-400 transition-colors"
+              >Home</a
+            >
+            <a
+              href="index.html#about"
+              class="hover:text-purple-400 transition-colors"
+              >About</a
+            >
+            <a
+              href="index.html#portfolio"
+              class="hover:text-purple-400 transition-colors"
+              >Portfolio</a
+            >
+            <a href="jasa.html" class="text-purple-400">Services</a>
+            <a
+              href="index.html#contact"
+              class="hover:text-purple-400 transition-colors"
+              >Contact</a
+            >
+
+            <!-- Theme Toggle -->
+            <div id="theme-toggle" class="theme-toggle">
+              <div class="theme-toggle-slider">
+                <i class="fas fa-moon text-xs text-white"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden flex items-center space-x-4">
+            <div id="mobile-theme-toggle" class="theme-toggle scale-75">
+              <div class="theme-toggle-slider">
+                <i class="fas fa-moon text-xs text-white"></i>
+              </div>
+            </div>
+            <button id="hamburger" class="hamburger text-white">
+              <div class="hamburger-line"></div>
+              <div class="hamburger-line"></div>
+              <div class="hamburger-line"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        id="mobile-menu"
+        class="mobile-menu fixed top-0 left-0 w-64 h-full glass z-50 md:hidden"
+      >
+        <div class="p-6">
+          <button id="close-menu" class="absolute top-4 right-4 text-2xl">
+            <i class="fas fa-times"></i>
+          </button>
+          <div class="mt-12 space-y-4">
+            <a
+              href="index.html"
+              class="block text-lg hover:text-purple-400 transition-colors"
+              >Home</a
+            >
+            <a
+              href="index.html#about"
+              class="block text-lg hover:text-purple-400 transition-colors"
+              >About</a
+            >
+            <a
+              href="index.html#portfolio"
+              class="block text-lg hover:text-purple-400 transition-colors"
+              >Portfolio</a
+            >
+            <a href="jasa.html" class="block text-lg text-purple-400"
+              >Services</a
+            >
+            <a
+              href="index.html#contact"
+              class="block text-lg hover:text-purple-400 transition-colors"
+              >Contact</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      id="home"
+      class="min-h-screen flex items-center justify-center pt-20 px-4 relative overflow-hidden"
+    >
+      <!-- Animated background particles -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          class="particle w-2 h-2 bg-purple-500 absolute top-20 left-1/4 animate-pulse"
+        ></div>
+        <div
+          class="particle w-3 h-3 bg-pink-500 absolute top-40 right-1/4 animate-pulse"
+          style="animation-delay: 0.5s"
+        ></div>
+        <div
+          class="particle w-2 h-2 bg-blue-500 absolute bottom-40 left-1/3 animate-pulse"
+          style="animation-delay: 1s"
+        ></div>
+      </div>
+
+      <div class="container mx-auto text-center">
+        <div class="max-w-4xl mx-auto space-y-8">
+          <div class="inline-block px-4 py-2 glass rounded-full text-sm mb-4">
+            <span class="text-pink-400">●</span> Professional Landing Page
+            Services
+          </div>
+
+          <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
+            <span class="gradient-text">Landing Page</span><br />
+            <span class="text-3xl sm:text-4xl lg:text-5xl">Services</span>
+          </h1>
+
+          <p class="text-gray-300 text-lg sm:text-xl max-w-2xl mx-auto">
+            Membantu bisnis kecil, brand pribadi, dan event tampil lebih
+            profesional online dengan landing page yang modern dan menarik.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <a
+              href="#pricing"
+              class="btn-primary px-8 py-4 rounded-full font-semibold text-white glow-blue"
+            >
+              Lihat Paket <i class="fas fa-arrow-down ml-2"></i>
+            </a>
+            <a
+              href="#contact"
+              class="btn-secondary px-8 py-4 rounded-full font-semibold text-white glow-pink"
+            >
+              Hubungi Saya <i class="fas fa-phone ml-2"></i>
+            </a>
+          </div>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto pt-12">
+            <div class="glass rounded-xl p-4">
+              <div class="text-3xl font-bold gradient-text mb-1">10+</div>
+              <div class="text-sm text-gray-400">Proyek Selesai</div>
+            </div>
+            <div class="glass rounded-xl p-4">
+              <div class="text-3xl font-bold gradient-text mb-1">100%</div>
+              <div class="text-sm text-gray-400">Client Puas</div>
+            </div>
+            <div class="glass rounded-xl p-4">
+              <div class="text-3xl font-bold gradient-text mb-1">24/7</div>
+              <div class="text-sm text-gray-400">Fast Response</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Packages (Pricing) -->
+    <section id="pricing" class="py-20 px-4">
+      <div class="container mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+            Paket <span class="gradient-text">Layanan</span>
+          </h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Pilih paket yang sesuai dengan kebutuhan bisnis Anda
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <!-- Paket Hemat -->
+          <div class="glass rounded-2xl p-8 card-3d">
+            <div class="text-center mb-6">
+              <div
+                class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4"
+              >
+                <i class="fas fa-rocket text-2xl text-white"></i>
+              </div>
+              <h3 class="text-2xl font-bold mb-2">Paket Hemat</h3>
+              <div class="text-4xl font-bold gradient-text mb-2">Rp150K</div>
+              <p class="text-gray-400 text-sm">Perfect untuk pemula</p>
+            </div>
+
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">1 halaman landing page simple</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Design modern & clean</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Mobile friendly</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Revisi 1x</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-times text-gray-600 mt-1"></i>
+                <span class="text-gray-500">Animasi interaktif</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-times text-gray-600 mt-1"></i>
+                <span class="text-gray-500">Domain & hosting</span>
+              </li>
+            </ul>
+
+            <a
+              href="#contact"
+              class="block w-full py-3 text-center glass rounded-xl hover:bg-white/10 transition-all font-semibold"
+            >
+              Pilih Paket
+            </a>
+          </div>
+
+          <!-- Paket Standard (Popular) -->
+          <div
+            class="glass rounded-2xl p-8 card-3d relative border-2 border-pink-500/50"
+          >
+            <div class="popular-badge">
+              <i class="fas fa-star mr-1"></i> POPULAR
+            </div>
+
+            <div class="text-center mb-6">
+              <div
+                class="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4"
+              >
+                <i class="fas fa-fire text-2xl text-white"></i>
+              </div>
+              <h3 class="text-2xl font-bold mb-2">Paket Standard</h3>
+              <div class="text-4xl font-bold gradient-text mb-2">Rp350K</div>
+              <p class="text-gray-400 text-sm">Paling banyak dipilih</p>
+            </div>
+
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Landing page responsive</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Design premium & modern</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Mobile & tablet friendly</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Animasi smooth interaktif</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Revisi 3x</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-times text-gray-600 mt-1"></i>
+                <span class="text-gray-500">Domain & hosting</span>
+              </li>
+            </ul>
+
+            <a
+              href="#contact"
+              class="block w-full py-3 text-center btn-secondary rounded-xl font-semibold text-white glow-pink"
+            >
+              Pilih Paket
+            </a>
+          </div>
+
+          <!-- Paket Pro -->
+          <div class="glass rounded-2xl p-8 card-3d">
+            <div class="text-center mb-6">
+              <div
+                class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4"
+              >
+                <i class="fas fa-crown text-2xl text-white"></i>
+              </div>
+              <h3 class="text-2xl font-bold mb-2">Paket Pro</h3>
+              <div class="text-4xl font-bold gradient-text mb-2">Rp700K+</div>
+              <p class="text-gray-400 text-sm">Full package solution</p>
+            </div>
+
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Multi-page website</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Design custom & exclusive</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Fully responsive semua device</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Advanced animations</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Unlimited revisi</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fas fa-check text-green-400 mt-1"></i>
+                <span class="text-gray-300">Domain & hosting 1 tahun</span>
+              </li>
+            </ul>
+
+            <a
+              href="#contact"
+              class="block w-full py-3 text-center glass rounded-xl hover:bg-white/10 transition-all font-semibold"
+            >
+              Pilih Paket
+            </a>
+          </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="text-center mt-12">
+          <p class="text-gray-400 mb-4">
+            <i class="fas fa-info-circle mr-2"></i>
+            Semua paket sudah termasuk konsultasi gratis dan dokumentasi lengkap
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Projects -->
+    <section id="demo" class="py-20 px-4 bg-black/20">
+      <div class="container mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+            Contoh <span class="gradient-text">Landing Page</span>
+          </h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Lihat beberapa contoh landing page yang sudah kami buat
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <!-- Demo 1 -->
+          <div class="glass rounded-2xl overflow-hidden card-3d">
+            <div class="demo-img">
+              <img
+                src="https://via.placeholder.com/400x250/667eea/ffffff?text=Restoran+Landing+Page"
+                alt="Restoran Demo"
+                class="w-full h-48 object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">Restoran</h3>
+              <p class="text-gray-400 mb-4 text-sm">
+                Landing page untuk restoran dengan menu digital, reservasi
+                online, dan galeri foto makanan.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span
+                  class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs"
+                  >Responsive</span
+                >
+                <span
+                  class="px-3 py-1 bg-pink-500/20 text-pink-300 rounded-full text-xs"
+                  >Animasi</span
+                >
+              </div>
+              <a
+                href="#contact"
+                class="inline-block px-6 py-2 btn-primary rounded-lg text-sm font-semibold"
+              >
+                Lihat Demo <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Demo 2 -->
+          <div class="glass rounded-2xl overflow-hidden card-3d">
+            <div class="demo-img">
+              <img
+                src="https://via.placeholder.com/400x250/764ba2/ffffff?text=Kursus+Privat"
+                alt="Kursus Demo"
+                class="w-full h-48 object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">Kursus Privat</h3>
+              <p class="text-gray-400 mb-4 text-sm">
+                Landing page untuk jasa kursus dengan daftar paket, testimoni,
+                dan form pendaftaran online.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span
+                  class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs"
+                  >Modern</span
+                >
+                <span
+                  class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-xs"
+                  >Interactive</span
+                >
+              </div>
+              <a
+                href="#contact"
+                class="inline-block px-6 py-2 btn-primary rounded-lg text-sm font-semibold"
+              >
+                Lihat Demo <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Demo 3 -->
+          <div class="glass rounded-2xl overflow-hidden card-3d">
+            <div class="demo-img">
+              <img
+                src="https://via.placeholder.com/400x250/ec4899/ffffff?text=Fashion+Brand"
+                alt="Fashion Demo"
+                class="w-full h-48 object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">Produk Fashion</h3>
+              <p class="text-gray-400 mb-4 text-sm">
+                Landing page untuk brand fashion dengan katalog produk, promo
+                menarik, dan link ke WhatsApp.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span
+                  class="px-3 py-1 bg-pink-500/20 text-pink-300 rounded-full text-xs"
+                  >Stylish</span
+                >
+                <span
+                  class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs"
+                  >Fast</span
+                >
+              </div>
+              <a
+                href="#contact"
+                class="inline-block px-6 py-2 btn-primary rounded-lg text-sm font-semibold"
+              >
+                Lihat Demo <i class="fas fa-external-link-alt ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4">
+      <div class="container mx-auto">
+        <div class="max-w-3xl mx-auto text-center">
+          <div class="glass rounded-3xl p-12">
+            <div
+              class="w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6"
+            >
+              <i class="fas fa-comments text-3xl text-white"></i>
+            </div>
+
+            <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+              Siap bikin landing page
+              <span class="gradient-text">impian kamu?</span>
+            </h2>
+
+            <p class="text-gray-300 text-lg mb-8 max-w-xl mx-auto">
+              Klik tombol di bawah untuk langsung terhubung dengan saya via
+              WhatsApp. Konsultasi gratis dan fast response!
+            </p>
+
+            <a
+              href="https://wa.me/6285240094857?text=Halo,%20saya%20tertarik%20dengan%20jasa%20landing%20page%20Anda"
+              target="_blank"
+              class="inline-block btn-secondary px-10 py-5 rounded-full text-lg font-bold text-white glow-pink"
+            >
+              <i class="fab fa-whatsapp mr-3 text-2xl"></i>
+              Hubungi via WhatsApp
+            </a>
+
+            <div class="mt-8 pt-8 border-t border-white/10">
+              <p class="text-gray-400 text-sm mb-4">Atau hubungi melalui:</p>
+              <div class="flex justify-center gap-4">
+                <a
+                  href="mailto:anugrah@example.com"
+                  class="w-12 h-12 glass rounded-lg flex items-center justify-center hover:bg-white/10 transition-all"
+                >
+                  <i class="fas fa-envelope"></i>
+                </a>
+                <a
+                  href="https://instagram.com/anugrahsyahbanpratamaa/"
+                  target="_blank"
+                  class="w-12 h-12 glass rounded-lg flex items-center justify-center hover:bg-white/10 transition-all"
+                >
+                  <i class="fab fa-instagram text-pink-400"></i>
+                </a>
+                <a
+                  href="https://github.com/Gieez"
+                  target="_blank"
+                  class="w-12 h-12 glass rounded-lg flex items-center justify-center hover:bg-white/10 transition-all"
+                >
+                  <i class="fab fa-github"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-white/10">
+      <div class="container mx-auto px-4">
+        <div
+          class="flex flex-col md:flex-row justify-between items-center gap-4"
+        >
+          <div class="text-center md:text-left">
+            <p class="text-gray-400">
+              &copy; 2024 Anugrah Syahban Pratama. All rights reserved.
+            </p>
+          </div>
+          <div class="flex gap-6">
+            <a
+              href="index.html"
+              class="text-gray-400 hover:text-purple-400 transition-colors"
+              >Home</a
+            >
+            <a
+              href="index.html#about"
+              class="text-gray-400 hover:text-purple-400 transition-colors"
+              >About</a
+            >
+            <a
+              href="index.html#portfolio"
+              class="text-gray-400 hover:text-purple-400 transition-colors"
+              >Portfolio</a
+            >
+            <a href="jasa.html" class="text-purple-400">Services</a>
+            <a
+              href="index.html#contact"
+              class="text-gray-400 hover:text-purple-400 transition-colors"
+              >Contact</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="jasa.js"></script>
+  </body>
+</html>
